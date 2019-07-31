@@ -171,6 +171,12 @@ type Override struct {
 	User  APIObject `json:"user,omitempty"`
 }
 
+// ListOverridesResponse matches what the real ListOverrides endpoint provides
+type ListOverridesResponse struct {
+	Total     int        `json:"total",omitempty`
+	Overrides []Override `json:"overrides,omitempty"`
+}
+
 // ListOverrides lists overrides for a given time range.
 func (c *Client) ListOverrides(id string, o ListOverridesOptions) ([]Override, error) {
 	v, err := query.Values(o)
@@ -181,14 +187,11 @@ func (c *Client) ListOverrides(id string, o ListOverridesOptions) ([]Override, e
 	if err != nil {
 		return nil, err
 	}
-	var result map[string][]Override
+	var result ListOverridesResponse
 	if err := c.decodeJSON(resp, &result); err != nil {
 		return nil, err
 	}
-	overrides, ok := result["overrides"]
-	if !ok {
-		return nil, fmt.Errorf("JSON response does not have overrides field")
-	}
+	overrides := result.Overrides
 	return overrides, nil
 }
 
