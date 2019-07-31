@@ -3,6 +3,9 @@
 
 go-pagerduty is a CLI and [go](https://golang.org/) client library for the [PagerDuty v2 API](https://v2.developer.pagerduty.com/v2/page/api-reference).
 
+## Why a fork?
+The API docs seem to match this library, but the docs don't match the actual endpoints (e.g. [ListOverrides](https://api-reference.pagerduty.com/#!/Schedules/get_schedules_id_overrides) has a top-level "total" field that is undocumented and breaks the library). This fork will house tweaks to the official library to make it work with the real endpoints as discrepancies are discovered.
+
 ## Installation
 
 ```
